@@ -1,3 +1,4 @@
+
 .text
 .global _start
 
@@ -14,11 +15,10 @@ _start:
 	cmp r1, r2
 	ldr sp, =0x40000000+4096
 	moveq sp, #4096
-	str r0, [r1]
+	streq r0, [r1]
 
 	bl main 
 
 halt:
 	b halt
-
 
