@@ -1,0 +1,94 @@
+
+led.elf:     file format elf32-littlearm
+
+
+Disassembly of section .text:
+
+00000000 <_start>:
+   0:	e3a0da01 	mov	sp, #4096	; 0x1000
+   4:	e3a00004 	mov	r0, #4
+   8:	eb000015 	bl	64 <led>
+   c:	e59f000c 	ldr	r0, [pc, #12]	; 20 <halt+0x4>
+  10:	eb000003 	bl	24 <delay>
+  14:	e3a00005 	mov	r0, #5
+  18:	eb000011 	bl	64 <led>
+
+0000001c <halt>:
+  1c:	eafffffe 	b	1c <halt>
+  20:	000186a0 	andeq	r8, r1, r0, lsr #13
+
+00000024 <delay>:
+  24:	e52db004 	push	{fp}		; (str fp, [sp, #-4]!)
+  28:	e28db000 	add	fp, sp, #0
+  2c:	e24dd00c 	sub	sp, sp, #12
+  30:	e50b0008 	str	r0, [fp, #-8]
+  34:	e51b3008 	ldr	r3, [fp, #-8]
+  38:	e3530000 	cmp	r3, #0
+  3c:	03a02000 	moveq	r2, #0
+  40:	13a02001 	movne	r2, #1
+  44:	e20220ff 	and	r2, r2, #255	; 0xff
+  48:	e2433001 	sub	r3, r3, #1
+  4c:	e50b3008 	str	r3, [fp, #-8]
+  50:	e3520000 	cmp	r2, #0
+  54:	1afffff6 	bne	34 <delay+0x10>
+  58:	e28bd000 	add	sp, fp, #0
+  5c:	e8bd0800 	pop	{fp}
+  60:	e12fff1e 	bx	lr
+
+00000064 <led>:
+  64:	e52db004 	push	{fp}		; (str fp, [sp, #-4]!)
+  68:	e28db000 	add	fp, sp, #0
+  6c:	e24dd014 	sub	sp, sp, #20
+  70:	e50b0010 	str	r0, [fp, #-16]
+  74:	e59f305c 	ldr	r3, [pc, #92]	; d8 <led+0x74>
+  78:	e50b300c 	str	r3, [fp, #-12]
+  7c:	e59f3058 	ldr	r3, [pc, #88]	; dc <led+0x78>
+  80:	e50b3008 	str	r3, [fp, #-8]
+  84:	e51b3010 	ldr	r3, [fp, #-16]
+  88:	e3530004 	cmp	r3, #4
+  8c:	1a000003 	bne	a0 <led+0x3c>
+  90:	e51b300c 	ldr	r3, [fp, #-12]
+  94:	e3a02c01 	mov	r2, #256	; 0x100
+  98:	e5832000 	str	r2, [r3]
+  9c:	ea000005 	b	b8 <led+0x54>
+  a0:	e51b3010 	ldr	r3, [fp, #-16]
+  a4:	e3530005 	cmp	r3, #5
+  a8:	1a000002 	bne	b8 <led+0x54>
+  ac:	e51b300c 	ldr	r3, [fp, #-12]
+  b0:	e3a02b01 	mov	r2, #1024	; 0x400
+  b4:	e5832000 	str	r2, [r3]
+  b8:	e51b3008 	ldr	r3, [fp, #-8]
+  bc:	e3a02000 	mov	r2, #0
+  c0:	e5832000 	str	r2, [r3]
+  c4:	e3a03000 	mov	r3, #0
+  c8:	e1a00003 	mov	r0, r3
+  cc:	e28bd000 	add	sp, fp, #0
+  d0:	e8bd0800 	pop	{fp}
+  d4:	e12fff1e 	bx	lr
+  d8:	56000050 	undefined instruction 0x56000050
+  dc:	56000054 	undefined instruction 0x56000054
+
+Disassembly of section .ARM.attributes:
+
+00000000 <.ARM.attributes>:
+   0:	00002541 	andeq	r2, r0, r1, asr #10
+   4:	61656100 	cmnvs	r5, r0, lsl #2
+   8:	01006962 	tsteq	r0, r2, ror #18
+   c:	0000001b 	andeq	r0, r0, fp, lsl r0
+  10:	00543405 	subseq	r3, r4, r5, lsl #8
+  14:	01080206 	tsteq	r8, r6, lsl #4
+  18:	04120109 	ldreq	r0, [r2], #-265	; 0x109
+  1c:	01150114 	tsteq	r5, r4, lsl r1
+  20:	01180317 	tsteq	r8, r7, lsl r3
+  24:	Address 0x00000024 is out of bounds.
+
+
+Disassembly of section .comment:
+
+00000000 <.comment>:
+   0:	3a434347 	bcc	10d0d24 <__bss_end__+0x10c8c44>
+   4:	74632820 	strbtvc	r2, [r3], #-2080	; 0x820
+   8:	312d676e 	teqcc	sp, lr, ror #14
+   c:	312e362e 	teqcc	lr, lr, lsr #12
+  10:	2e342029 	cdpcs	0, 3, cr2, cr4, cr9, {1}
+  14:	00332e34 	eorseq	r2, r3, r4, lsr lr
