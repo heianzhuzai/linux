@@ -47,6 +47,17 @@ cpy:
 	cmp r2, r3
 	bne cpy
 
+/* clean bss */
+	ldr r1, = bss_start
+	ldr r2, = bss_end
+	mov r3, #0
+clean:
+	strb r3, [r1]
+	add r1, r1, #1
+	cmp r1, r2
+	bne clean
+	
+
 	bl main
 
 halt:

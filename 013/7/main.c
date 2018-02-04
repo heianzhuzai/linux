@@ -20,6 +20,13 @@ int main(void)
 
 	while(1)
 	{
+#if 0
+		puts("\n\rg_A = ");
+		printHex(g_char);
+		puts("\n\rg_A = ");
+		printHex(g_char3);
+		puts("\n\r");
+#endif	
 		putchar(g_char);
 		g_char++;
 		
