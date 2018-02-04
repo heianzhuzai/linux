@@ -21,7 +21,7 @@ int main(void)
 		
 		// putchar(g_char3);
 		// g_char3++;
-		delay(1000000);
+		delay(100000);
 	}
 	
 	return 0;
