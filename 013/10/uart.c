@@ -34,6 +34,26 @@ int puts(const char *s)
 	}
 }
 
+void printHex(unsigned int val)
+{
+	int i;
+	unsigned char arr[8];
+
+	for(i=0; i<8; i++)
+	{
+		arr[i] = val & 0x0F;
+		val >>= 4;
+	}
+	puts("0x");
+	for(i=7; i>=0; i--)
+	{
+		if (arr[i]>=0 && arr[i]<=9)
+			putchar(arr[i] + '0');
+		else if(arr[i]>=0xA && arr[i]<=0xF)
+			putchar(arr[i] - 0xA + 'A');
+	}
+}
+
 
 
 

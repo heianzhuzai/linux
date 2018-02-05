@@ -3,6 +3,7 @@
 
 void sdram_init(void);
 int sdram_test(void);
+void sdram_init2(void);
 
 #endif
 

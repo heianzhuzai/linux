@@ -12,6 +12,33 @@ void sdram_init(void)
 	MRSRB7 = 0x20;	
 }
 
+void sdram_init2(void)
+{
+	unsigned int i = 0;
+	unsigned int arr[] = {
+		0x22000000,
+		0x00000700,
+		0x00000700,
+		0x00000700,
+		0x00000700,
+		0x00000700,
+		0x00000700,
+		0x18001,
+		0x18001,
+		0x8404f5,
+		0xb1,
+		0x20,		
+		0x20,		
+	};
+	volatile unsigned int *p = (volatile unsigned int *)0x48000000;
+
+	for (i=0; i<13; i++)
+	{
+		*p = arr[i];
+		p++;
+	}
+}
+
 int sdram_test(void)
 {
 	volatile unsigned char *p = (volatile unsigned char *)0x30000000;

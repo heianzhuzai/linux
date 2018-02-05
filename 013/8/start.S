@@ -32,7 +32,34 @@ _start:
 	moveq sp, #4096
 	streq r0, [r1]
 	
-	bl main
+	bl sdram_init
+	//bl sdram_init2
+
+	/* relocate */
+	mov r1, #0
+	ldr r2, =_start
+	ldr r3, =__bss_start
+
+cpy:
+	ldr r4, [r1]
+	str r4, [r2]
+	add r1, r1, #4
+	add r2, r2, #4
+	cmp r2, r3
+	ble cpy
+
+/* clean bss */
+	ldr r1, = __bss_start
+	ldr r2, = _end
+	mov r3, #0
+clean:
+	str r3, [r1]
+	add r1, r1, #4
+	cmp r1, r2
+	ble clean
+	
+	//bl main
+	ldr pc, =main
 
 halt:
 	b halt
