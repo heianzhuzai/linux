@@ -4,6 +4,7 @@
 void interrupt_init(void)
 {
 	INTMSK &= ~((1<<0) | (1<<2) | (1<<5));
+	INTMSK &= ~(1<<10);
 }
 
 void key_eint_init(void)
@@ -85,6 +86,10 @@ void handle_irq_c(void)
 	if(bit == 0 || bit == 2 || bit == 5)
 	{
 		key_eint_irq(bit);
+	}
+	else if(bit == 10)
+	{
+		timer_irq();
 	}
 	SRCPND = (1<<bit);
 	INTPND = (1<<bit);

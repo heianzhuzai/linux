@@ -3,6 +3,7 @@
 #include "init.h"
 #include "led.h"
 #include "interrupt.h"
+#include "timer.h"
 
 char g_char = 'A';
 char g_char3 = 'a';
@@ -14,8 +15,9 @@ int g_B;
 int main(void)
 {	
 	ledinit();
-	interrupt_init();
+	//interrupt_init();
 	key_eint_init();
+	timer_init();
 	
 	puts("\n\rg_A = ");
 	printHex(g_A);
@@ -36,6 +38,7 @@ int main(void)
 		putchar(g_char3);
 		g_char3++;
 		delay(1000000);
+		//printHex(TCNTO0);
 	}
 	
 	return 0;

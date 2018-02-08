@@ -1,9 +1,10 @@
 #include "s3c2440_soc.h"
-
+#include "interrupt.h"
 
 void interrupt_init(void)
 {
 	INTMSK &= ~((1<<0) | (1<<2) | (1<<5));
+	INTMSK &= ~(1<<10);
 }
 
 void key_eint_init(void)
@@ -19,6 +20,10 @@ void key_eint_init(void)
 	EXTINT2 |= (7<<12);
 
 	EINTMASK &= ~((1<<11) | (1<<19));
+	
+	register_irq(0, key_eint_irq);
+	register_irq(2, key_eint_irq);
+	register_irq(5, key_eint_irq);
 }
 
 void key_eint_irq(int irq)
@@ -82,12 +87,17 @@ void handle_irq_c(void)
 {
 	int bit = INTOFFSET;
 
-	if(bit == 0 || bit == 2 || bit == 5)
-	{
-		key_eint_irq(bit);
-	}
+	irq_array[bit](bit);
+	
 	SRCPND = (1<<bit);
 	INTPND = (1<<bit);
 }
+
+void register_irq(int irq, irq_func fp)
+{
+	irq_array[irq] = fp;
+	INTMSK &= ~(1<<irq);
+}
+
 
 
